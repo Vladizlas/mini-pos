@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Transaction } from "@/types/transaction";
 import PrintButton from "@/components/transactions/print-button";
 import { useAuth } from "@/contexts/auth-context";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 

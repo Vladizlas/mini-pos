@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/auth-context";
 import { getTransaction, getTransactions } from "@/services/transaction.service";
 import { Transaction } from "@/types/transaction";

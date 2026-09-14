@@ -32,7 +32,7 @@ export default function PrintInvoice({ transaction }: PrintInvoiceProps) {
         <div>
           <p className="font-bold">Pembayaran</p>
 
-          <p className="mt-1 capitalize">{transaction.paymentMethod}</p>
+          <p className="mt-1 capitalize">{transaction.paymentmethod}</p>
         </div>
       </div>
 

@@ -20,7 +20,7 @@ export default function NewTransactionPage(){
   const [cart, setCart] = useState<CartItem[]>([]);
   const [search, setSearch] = useState("");
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cash");
-  const [paymentAmount, setPaymentAmount] = useState(0);
+  const [paidAmount, setpaidAmount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -48,7 +48,7 @@ export default function NewTransactionPage(){
 
   const total = useMemo(() => cart.reduce((sum, item) => sum + item.price * item.qty, 0), [cart]);
 
-  const change = paymentMethod === "cash" ? Math.max(paymentAmount - total, 0) : 0;
+  const change = paymentMethod === "cash" ? Math.max(paidAmount - total, 0) : 0;
 
   function addToCart(product: Product){
     if (product.stock <= 0) return;
@@ -77,14 +77,14 @@ export default function NewTransactionPage(){
     setError("");
 
     if (cart.length === 0) return setError("Keranjang masih kosong.");
-    if (paymentMethod === "cash" && paymentAmount < total) return setError("Uang pembayaran masih kurang.");
+    if (paymentMethod === "cash" && paidAmount < total) return setError("Uang pembayaran masih kurang.");
 
     try {
       setSubmitting(true);
       const result = await checkout(user.uid, {
         items: cart,
         paymentMethod,
-        paymentAmount: paymentMethod === "cash" ? paymentAmount : total,
+        paidAmount: paymentMethod === "cash" ? paidAmount : total,
       });
       router.push(`/transactions/${result.transactionId}`);
     } catch (err) {
@@ -184,7 +184,7 @@ export default function NewTransactionPage(){
           {paymentMethod === "cash" && (
             <label className="grid gap-2 text-sm font-bold">
               Uang Diterima
-              <input type="number" min="0" value={paymentAmount || ""} onChange={(e) => setPaymentAmount(Number(e.target.value))} className="min-h-11 rounded-xl border border-slate-700 bg-slate-900 px-3 text-white outline-none" />
+              <input type="number" min="0" value={paidAmount || ""} onChange={(e) => setpaidAmount(Number(e.target.value))} className="min-h-11 rounded-xl border border-slate-700 bg-slate-900 px-3 text-white outline-none" />
             </label>
           )}
 

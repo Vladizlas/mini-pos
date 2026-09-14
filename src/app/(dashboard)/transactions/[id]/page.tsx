@@ -77,7 +77,7 @@ export default function TransactionDetailPage() {
       <div className="grid gap-3 border-t border-slate-100 pt-6 text-sm">
         <div className="flex justify-between"><span className="text-slate-500">Metode Pembayaran</span><strong className="uppercase text-slate-900">{transaction.paymentmethod}</strong></div>
         <div className="flex justify-between"><span className="text-slate-500">Total</span><strong className="text-slate-900">{formatCurrency(transaction.total)}</strong></div>
-        <div className="flex justify-between"><span className="text-slate-500">Dibayar</span><strong className="text-slate-900">{formatCurrency(transaction.paymentAmount
+        <div className="flex justify-between"><span className="text-slate-500">Dibayar</span><strong className="text-slate-900">{formatCurrency(transaction.paidAmount
 )}</strong></div>
         <div className="flex justify-between text-base"><span className="font-bold text-green-500">Kembalian</span><strong className="text-slate-900">{formatCurrency(transaction.change)}</strong></div>
       </div>

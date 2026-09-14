@@ -16,7 +16,7 @@ import { createInvoiceNumber } from "@/utils/invoice";
 export type CheckoutInput = {
   items: CartItem[];
   paymentMethod: PaymentMethod
-  paymentAmount: number;
+  paidAmount: number;
 }
 
 export async function checkout(uid: string, input: CheckoutInput){
@@ -24,7 +24,7 @@ export async function checkout(uid: string, input: CheckoutInput){
 
   const total = input.items.reduce((sum, item) => sum + item.price * item.qty, 0);
 
-  if (input.paymentMethod === "cash" && input.paymentAmount < total){
+  if (input.paymentMethod === "cash" && input.paidAmount < total){
     throw new Error("Uang pembayaran masih kurang.")
   }
 
@@ -67,8 +67,8 @@ export async function checkout(uid: string, input: CheckoutInput){
       subtotal: total,
       total,
       paymentmethod: input.paymentMethod,
-      paymentAmount: input.paymentAmount,
-      change: input.paymentMethod === "cash" ? input.paymentAmount - total : 0,
+      paidAmount: input.paidAmount,
+      change: input.paymentMethod === "cash" ? input.paidAmount - total : 0,
       createdAt: serverTimestamp(),
     });
   });

@@ -1,7 +1,9 @@
-import React from "react";
+import React from 'react'
 
-export function Header (){
-    return(
-        <header>MiniPOS Header</header>
-    );
+function Header() {
+  return (
+    <header>MiniPOS Header</header>
+  )
 }
+
+export default Header

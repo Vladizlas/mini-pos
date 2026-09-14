@@ -1,69 +1,87 @@
 "use client";
-
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import {
-    Boxes,
-    LayoutDashboard,
-    ReceiptText,
-    ShoppingCart,
+  Boxes,
+  LayoutDashboard,
+  LogOut,
+  ReceiptText,
+  ShoppingCart,
 } from "lucide-react";
+import { useAuth } from "@/contexts/auth-context";
+import { Button } from "../ui/Button";
 
 const menu = [
-    {
-        href: "/dashboard",
-        label: "Dashboard",
-        icon: LayoutDashboard,
-    },
-    {
-        href: "/products",
-        label: "Produk",
-        icon: Boxes,
-    },
-    {
-        href: "/transactions/new",
-        label: "Kasir / POS",
-        icon: ShoppingCart,
-    },
-    {
-        href: "/transactions",
-        label: "Riwayat",
-        icon: ReceiptText,
-    },
+  {
+    href: "/dashboard",
+    label: "Dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    href: "/products",
+    label: "Produk",
+    icon: Boxes,
+  },
+  {
+    href: "/transactions/new",
+    label: "Kasir / POS",
+    icon: ShoppingCart,
+  },
+  {
+    href: "/transactions",
+    label: "Riwayat",
+    icon: ReceiptText,
+  },
 ];
 
-export function Sidebar(){
+function Sidebar() {
+  const pathname = usePathname();
+  const router = useRouter();
+  const { logout } = useAuth();
 
+  async function handleLogout(){
+    await logout();
+    router.replace("/login");
+  }
 
-    return(
-        <aside className='bg-slate-950 text-white lg:min-h-screen lg:w-64'>
-            <div className='p-5'>
-                <div className='text-x1 font-black'>
-                    MiniPOS
-                </div>
+  return (
+    <aside className="bg-slate-950 text-white lg:min-h-screen lg:w-64">
+      <div>
+        <div className="text-xl font-black">MiniPOS</div>
+        <div className="mt-1 text-xs text-slate-400">Bootcamp Project</div>
+      </div>
+      <Button onClick={handleLogout} className="rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-white lg:hidden" aria-label="Logout">
+        <LogOut size={18}/>
+      </Button>
 
-                <div className='mt-1 text-xs text-slate-400'>
-                    Bootcamp Project
-                </div>
-            </div>
+      <nav className="grid gap-2 px-4">
+        {menu.map((item) => {
+          const Icon = item.icon;
+          const active =
+          pathname === item.href ||
+          (item.href !== "/dashboard" && pathname.startsWith(item.href));
+          
+          return (
+            <Link
+            key={item.href}
+            href={item.href}
+            className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold ${active ? "bg-indigo-600 text-white" : "text-slate-300 hover:bg-slate-900 hover:text-white"}`}
+            >
+              <Icon size={18} />
 
-            <nav className='grid gap-2 px-4'>
-                {menu.map((item) => {
-                    const Icon = item.icon;
-
-                    return(
-                        <Link
-                            key={item.href}
-                            href={item.href}
-                            className='flex items-center gap-3 rounded-x1 px-4 py-3 text-sm font-semibold text-slate-300 hover:bg-slate-900 hover:text-white'
-                        >
-                            <Icon size={18} />
-                            {item.label}
-                        </Link>
-                    );
-                })
-                    
-                }
-            </nav>
-        </aside>
-    )
+              {item.label}
+            </Link>
+          );
+        })}
+      </nav>
+      <div className="mt-auto hidden p-4 lg:block">
+        <Button onClick={handleLogout} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-slate-300 hover:bg-slate-900 hover:
+        text-white">
+          <LogOut size={18}/> Logout
+        </Button>
+      </div>
+    </aside>
+  );
 }
+
+export default Sidebar;

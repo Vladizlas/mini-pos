@@ -172,9 +172,9 @@ export default function NewTransactionPage(){
         </div>
 
         <div className="mt-5 grid gap-3">
-          <label className="grid gap-2 text-sm font-bold">
+          <label className="grid gap-2 text-sm font-bold ">
             Metode Pembayaran
-            <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value as PaymentMethod)} className="min-h-11 rounded-xl border border-slate-700 bg-slate-900 px-3 text-white outline-none">
+            <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value as PaymentMethod)} className="min-h-11 rounded-xl border border-slate-700  bg-slate-900 px-3 text-slate-900 outline-none">
               <option value="cash">Cash</option>
               <option value="transfer">Transfer</option>
               <option value="qris">QRIS</option>

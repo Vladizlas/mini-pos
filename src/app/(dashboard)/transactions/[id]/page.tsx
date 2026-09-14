@@ -5,10 +5,11 @@ import { useAuth } from "@/contexts/auth-context";
 import { getTransaction, getTransactions } from "@/services/transaction.service";
 import { Transaction } from "@/types/transaction";
 import { formatCurrency, formatDate } from "@/utils/currency";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Printer } from "lucide-react";
 import Link from "next/link";
 import { notFound, useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useReactToPrint } from "react-to-print";
 
 
 export default function TransactionDetailPage() {
@@ -16,6 +17,13 @@ export default function TransactionDetailPage() {
   const { user } = useAuth();
   const [transaction, setTransaction] = useState<Transaction | null>(null);
   const [loading, setLoading] = useState(true);
+  const printRef = useRef<HTMLDivElement>(null);
+
+  const handlePrint = useReactToPrint({
+    contentRef: printRef,
+    documentTitle: `Invoice-${transaction?.invoiceNumber || "Transaksi"}`,
+  });
+
 
   useEffect(() => {
     if (!user) return;
@@ -27,10 +35,18 @@ export default function TransactionDetailPage() {
 
   if (loading) return <div className="rounded-2xl bg-white p-6">Memuat Transaksi</div>
   if (!transaction) return <div className="rounded-2xl bg-white p-6">Transaksi tidak ditemukan.</div>
-
+ console.log(transaction)
   return (
+    
   <div className="mx-auto max-w-3xl">
-    <div className="rounded-3xl bg-white p-6 shadow-sm sm:p-8">
+    <div className="mb-5 flex items-center justify-between print:hidden">
+      <Button onClick={() => handlePrint()} className="flex items-center gap-2">
+        <Printer size={16}/>
+        Cetak Invoice   
+      </Button>
+    </div>
+
+    <div ref={printRef} className="rounded-3xl bg-white p-6 shadow-sm sm:p-8">
       <div className="flex flex-col gap-5 border-b border-slate-100 pb-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
           <div className="grid size-12 place-items-center rounded-2xl bg-emerald-100 text-emerald-700"><CheckCircle2 /></div>
@@ -40,7 +56,7 @@ export default function TransactionDetailPage() {
             <p className="mt-1 text-sm text-slate-500">{formatDate(transaction.createdAt)}</p>
           </div>
         </div>
-        <Link href="/transactions/new"><Button>Transaksi Baru</Button></Link>
+        <Link href="/transactions/new"><Button className="print:hidden">Transaksi Baru</Button></Link>
       </div>
 
       <div className="py-6">
@@ -59,9 +75,10 @@ export default function TransactionDetailPage() {
       </div>
 
       <div className="grid gap-3 border-t border-slate-100 pt-6 text-sm">
-        <div className="flex justify-between"><span className="text-slate-500">Metode Pembayaran</span><strong className="uppercase">{transaction.paymentmethod}</strong></div>
+        <div className="flex justify-between"><span className="text-slate-500">Metode Pembayaran</span><strong className="uppercase text-slate-900">{transaction.paymentmethod}</strong></div>
         <div className="flex justify-between"><span className="text-slate-500">Total</span><strong className="text-slate-900">{formatCurrency(transaction.total)}</strong></div>
-        <div className="flex justify-between"><span className="text-slate-500">Dibayar</span><strong className="text-slate-900">{formatCurrency(transaction.paidAmount)}</strong></div>
+        <div className="flex justify-between"><span className="text-slate-500">Dibayar</span><strong className="text-slate-900">{formatCurrency(transaction.paymentAmount
+)}</strong></div>
         <div className="flex justify-between text-base"><span className="font-bold text-green-500">Kembalian</span><strong className="text-slate-900">{formatCurrency(transaction.change)}</strong></div>
       </div>
     </div>

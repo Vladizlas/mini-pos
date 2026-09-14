@@ -19,7 +19,7 @@ export type Transaction = {
   items: TransactionItem[];
   subtotal: number;
   total: number;
-  paidAmount: number;
+  paymentAmount: number;
   changeAmount: number;
   paymentmethod: PaymentMethod;
   change: number;

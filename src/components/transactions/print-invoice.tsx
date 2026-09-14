@@ -6,6 +6,7 @@ type PrintInvoiceProps = {
 };
 
 export default function PrintInvoice({ transaction }: PrintInvoiceProps) {
+
   return (
     <div className="hidden print:block print:text-black">
       {/* Header Invoice */}

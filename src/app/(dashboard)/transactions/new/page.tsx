@@ -88,6 +88,7 @@ export default function NewTransactionPage(){
       });
       router.push(`/transactions/${result.transactionId}`);
     } catch (err) {
+      console.log(err)
       setError(err instanceof Error ? err.message : "Transaksi gagal disimpan.");
     } finally{
       setSubmitting(false);

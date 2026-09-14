@@ -1,3 +1,4 @@
+"use client";
 
 import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/contexts/auth-context";
@@ -35,7 +36,7 @@ export default function TransactionDetailPage() {
           <div className="grid size-12 place-items-center rounded-2xl bg-emerald-100 text-emerald-700"><CheckCircle2 /></div>
           <div>
             <div className="text-xs font-bold uppercase tracking-widest text-emerald-600">Transaksi Berhasil</div>
-            <h1 className="mt-1 text-2xl font-black">{transaction.invoiceNumber}</h1>
+            <h1 className="mt-1 text-2xl font-black text-emerald-600">{transaction.invoiceNumber}</h1>
             <p className="mt-1 text-sm text-slate-500">{formatDate(transaction.createdAt)}</p>
           </div>
         </div>
@@ -43,15 +44,15 @@ export default function TransactionDetailPage() {
       </div>
 
       <div className="py-6">
-        <h2 className="mb-4 font-black">Detail Produk</h2>
+        <h2 className="mb-4 font-black text-slate-950">Detail Produk</h2>
         <div className="grid gap-3">
           {transaction.items.map((item) => (
             <div key={item.productId} className="flex items-center justify-between gap-4 rounded-xl bg-slate-50 p-4">
               <div>
-                <div className="font-bold">{item.name}</div>
-                <div className="mt-1 text-xs text-slate-500">{item.sku} • {item.qty} x {formatCurrency(item.price)}</div>
+                <div className="font-bold text-slate-900">{item.name}</div>
+                <div className="mt-1 text-xs text-slate-900">{item.sku} • {item.qty} x {formatCurrency(item.price)}</div>
               </div>
-              <div className="font-black">{formatCurrency(item.price * item.qty)}</div>
+              <div className="font-black text-slate-900">{formatCurrency(item.price * item.qty)}</div>
             </div>
           ))}
         </div>
@@ -59,9 +60,9 @@ export default function TransactionDetailPage() {
 
       <div className="grid gap-3 border-t border-slate-100 pt-6 text-sm">
         <div className="flex justify-between"><span className="text-slate-500">Metode Pembayaran</span><strong className="uppercase">{transaction.paymentMethod}</strong></div>
-        <div className="flex justify-between"><span className="text-slate-500">Total</span><strong>{formatCurrency(transaction.total)}</strong></div>
-        <div className="flex justify-between"><span className="text-slate-500">Dibayar</span><strong>{formatCurrency(transaction.paidAmount)}</strong></div>
-        <div className="flex justify-between text-base"><span className="font-bold">Kembalian</span><strong>{formatCurrency(transaction.change)}</strong></div>
+        <div className="flex justify-between"><span className="text-slate-500">Total</span><strong className="text-slate-900">{formatCurrency(transaction.total)}</strong></div>
+        <div className="flex justify-between"><span className="text-slate-500">Dibayar</span><strong className="text-slate-900">{formatCurrency(transaction.paidAmount)}</strong></div>
+        <div className="flex justify-between text-base"><span className="font-bold text-green-500">Kembalian</span><strong className="text-slate-900">{formatCurrency(transaction.change)}</strong></div>
       </div>
     </div>
   </div>

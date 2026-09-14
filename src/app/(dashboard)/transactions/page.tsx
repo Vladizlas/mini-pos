@@ -72,10 +72,10 @@ export default function TransactionPage(){
                       {trx.invoiceNumber}
                       </Link>
                     </td>
-                    <td className="px-5 py-4 text-slate-500">{formatDate(trx.createdAt)}</td>
-                    <td className="px-5 py-4">{trx.items.length}</td>
-                    <td className="px-5 py-4">{trx.paymentMethod}</td>
-                    <td className="px-5 py-4 text-right font-black">{formatCurrency(trx.total)}</td>
+                    <td className="px-5 py-4 text-slate-900">{formatDate(trx.createdAt)}</td>
+                    <td className="px-5 py-4 text-slate-900">{trx.items.length}</td>
+                    <td className="px-5 py-4 text-slate-900">{trx.paymentmethod}</td>
+                    <td className="px-5 py-4 text-slate-900 text-right font-black">{formatCurrency(trx.total)}</td>
                   </tr>
                 ))}
 

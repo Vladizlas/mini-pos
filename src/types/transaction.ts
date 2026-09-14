@@ -21,7 +21,7 @@ export type Transaction = {
   total: number;
   paidAmount: number;
   changeAmount: number;
-  paymentMethod: PaymentMethod;
+  paymentmethod: PaymentMethod;
   change: number;
   createdAt: Timestamp;
 }

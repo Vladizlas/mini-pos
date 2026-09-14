@@ -5,7 +5,6 @@ export type CartItem = {
   price: number;
   qty: number;
   stock: number;
-  subtotal: number;
 };
 
 export type PaymentMethod = "cash" | "transfer" | "qris";
